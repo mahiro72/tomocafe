@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  api:
+    container_name: tomocafe-api
+    build: 
+      context: ./app
+      dockerfile: ./Dockerfile
+      target: develop
+    tty: true
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    ports:
+      - 8080:8080
+    volumes:
+      - ./app:/go/src/github.com/mahiro72/tomocafe-api
+    networks:
+      - backend
+  mysql:
+    container_name: tomocafe-mysql
+    build:
+      context: .
+      dockerfile: ./db/mysql/Dockerfile
+      target: develop
+    tty: true
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_DATABASE=tomocafedb
+      - MYSQL_USER=user
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-tomocafe-volume:/var/lib/mysql
+      - ./db/mysql:/db/mysql
+    networks:
+      - backend
+
+volumes:
+  mysql-tomocafe-volume:
+
+networks:
+  backend:
