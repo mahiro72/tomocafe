@@ -10,8 +10,8 @@ CMD ["air", "-c", ".air.toml.develop"]
 
 ## Build
 FROM golang:1.20 AS build
-WORKDIR /go/src/github.com/copalette/copalette-api
-COPY app .
+WORKDIR /go/src/github.com/mahiro72/tomocafe-api
+COPY . .
 RUN go mod download
 RUN CGO_ENABLED=0 go build -o /server .
 
