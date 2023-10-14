@@ -25,7 +25,7 @@ func main() {
 			log.Print(err)
 			return
 		}
-		log.Println(bot,events)
+		log.Printf("%+v\n%+v",bot,events)
 		for _, event := range events {
 			if event.Type == linebot.EventTypeMessage {
 				log.Println("####",event)
@@ -42,6 +42,7 @@ func main() {
 	http.Handle("/callback", handler)
 
 	http.Handle("/health",http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println("HELLO!!!!!!!")
 		w.Write([]byte("ok"))
 	}))
 
